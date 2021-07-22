@@ -2865,7 +2865,11 @@ def RGB(bot, trigger):
 
 @plugin.search("savage!")
 def savage(bot, trigger):
-    bot.say("https://p.actionsack.com/misc/savage.gif")
+    savages = [
+        "https://p.actionsack.com/savage/fury.webp",
+        "https://p.actionsack.com/savage/savage.webp"
+    ]
+    bot.say(random.choice(savages))
 
 
 @plugin.search("🥗")
