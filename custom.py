@@ -2847,7 +2847,9 @@ def JTL(bot, trigger):
 def nC(bot, trigger):
     """A user triggering this command can only do so once per 15 minutes."""
     nC = [
-        "https://p.actionsack.com/nC/gambler.webp"
+        "https://p.actionsack.com/nC/deutch.webp",
+        "https://p.actionsack.com/nC/gambler.webp",
+        "https://p.actionsack.com/nC/ttv.webp"
     ]
     bot.say(random.choice(nC))
 
