@@ -234,7 +234,6 @@ def claim_money(bot, trigger):
 
 @plugin.command("betflip", "bf")
 @plugin.example(".bf 10 h")
-@plugin.rate(user=2)
 def gamble_betflip(bot, trigger):
     """Wager X amount of money on (h)eads or (t)ails. Winning will net you double your bet."""
     if trigger.sender == "#casino":
@@ -308,7 +307,6 @@ def gamble_betflip(bot, trigger):
 
 @plugin.command("wheeloffortune", "wheel")
 @plugin.example(".wheel 100")
-@plugin.rate(user=2)
 def gamble_wheel(bot, trigger):
     """Spin the Wheel of Fortune!"""
     if trigger.sender == "#casino":
