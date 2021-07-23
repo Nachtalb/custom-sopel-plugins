@@ -1106,6 +1106,7 @@ def fuckyou(bot, trigger):
         "https://p.actionsack.com/fuck/you/skating.webp",
         "https://p.actionsack.com/fuck/you/space_invader.webp",
         "https://p.actionsack.com/fuck/you/square.webp",
+        "https://p.actionsack.com/fuck/you/tina.webp",
         "https://p.actionsack.com/fuck/you/tommydoor.webp",
         "https://p.actionsack.com/fuck/you/trumpet.webp",
         "https://p.actionsack.com/fuck/you/westworld.webp",
