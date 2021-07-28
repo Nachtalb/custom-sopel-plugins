@@ -3328,3 +3328,8 @@ def albatraoz(bot, trigger):
 def little_swing(bot, trigger):
     """Can also be triggered with '!swing' anywhere in a message."""
     bot.say("https://p.actionsack.com/a/swing.ogg")
+
+
+@plugin.search("Let it go!")
+def let_it_go(bot, trigger):
+    bot.say("https://p.actionsack.com/v/letitgo.mp4")
