@@ -619,7 +619,9 @@ def tb(bot, trigger):
         "Nanogel. It acts as a quantum transducer.",
         "Don’t forget to move your mouse counter clockwise to reverse the logging process.",
         "But since their cryptographic protocols use poly-phasic entagled waveforms, cracking a code set would take half a century.",
-        "If I can just overclock the UNIX django, I can BASIC the DDOS root. Damn. No Dice. But wait...if I disencrypt their kilobytes with a backdoor handshake then...jackpot!"]
+        "If I can just overclock the UNIX django, I can BASIC the DDOS root. Damn. No Dice. But wait...if I disencrypt their kilobytes with a backdoor handshake then...jackpot!",
+        "https://p.actionsack.com/v/Rockwell_Retro_Encabulator.mp4"
+    ]
     bot.say(random.choice(tb), max_messages=2)
 
 
