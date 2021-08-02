@@ -3044,7 +3044,7 @@ def repost(bot, trigger):
 
 @plugin.rule("^🪦$")
 def rip(bot, trigger):
-    bot.say("https://p.actionsack.com/emoji/rip.png")
+    bot.say("https://p.actionsack.com/emoji/rip.webp")
 
 
 @plugin.search("!trump")
