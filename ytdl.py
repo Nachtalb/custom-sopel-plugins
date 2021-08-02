@@ -1,7 +1,7 @@
 from sopel import plugin, tools, formatting
 import os
 import re
-import youtube_dl
+import yt_dlp as youtube_dl
 
 
 ytdl_opts = {
