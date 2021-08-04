@@ -350,10 +350,10 @@ def dotdotdot(bot, trigger):
     bot.say("...")
 
 
-@plugin.search("deez nutz")
+@plugin.search("deez nut(s|z)")
 @plugin.command("dz")
 def deeznutz(bot, trigger):
-    """Can also be triggered with "deez nutz" anywhere in a message."""
+    """Can also be triggered with "deez nutz" or "deez nuts" anywhere in a message."""
     deez_nutz = [
         formatting.bold("DEEZ NUTZ!"),
         "https://p.actionsack.com/nutz/aldeez.webp",
