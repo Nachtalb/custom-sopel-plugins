@@ -62,6 +62,10 @@ Adds [Smite's VGS](https://smite.gamepedia.com/Voice_Guided_System) to Sopel.
 Posts a random joke from [yourmom.txt](https://github.com/xnaas/custom-sopel-plugins/blob/master/yourmom.txt).
 
 
+## [y'all.py](https://github.com/xnaas/custom-sopel-plugins/blob/master/y'all.py)
+Stop spelling y'all wrong.
+
+
 ## [ytdl.py](https://github.com/xnaas/custom-sopel-plugins/blob/master/ytdl.py)
 Uses [youtube-dl](https://youtube-dl.org/) to download and share a video. Would require editing to be useful to anyone else.
 
