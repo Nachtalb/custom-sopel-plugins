@@ -130,6 +130,7 @@ def fourtwenty(bot, trigger):
         "https://p.actionsack.com/420/realdanger.webp",
         "https://p.actionsack.com/420/replacements.webp",
         "https://p.actionsack.com/420/sealab.webp",
+        "https://p.actionsack.com/420/squad.webp",
         "https://p.actionsack.com/420/telluhwat.webp",
         "https://p.actionsack.com/420/thomas.webp",
         "https://p.actionsack.com/420/thomasrust.webp",
@@ -3335,3 +3336,8 @@ def little_swing(bot, trigger):
 @plugin.search("Let it go!")
 def let_it_go(bot, trigger):
     bot.say("https://p.actionsack.com/v/letitgo.mp4")
+
+
+@plugin.search("☕")
+def coffee(bot, trigger):
+    bot.say("https://p.actionsack.com/☕/☕.webp")
