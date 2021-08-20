@@ -3341,3 +3341,22 @@ def let_it_go(bot, trigger):
 @plugin.search("☕")
 def coffee(bot, trigger):
     bot.say("https://p.actionsack.com/☕/☕.webp")
+
+
+@plugin.search("this is fine")
+def thisisfine(bot, trigger):
+    this_is_fine = [
+        "https://p.actionsack.com/fine/3D.webp",
+        "https://p.actionsack.com/fine/HD_anim.webp",
+        "https://p.actionsack.com/fine/OG.webp",
+        "https://p.actionsack.com/fine/OG_crop.webp",
+        "https://p.actionsack.com/fine/adult_swim.mp4",
+        "https://p.actionsack.com/fine/adult_swim.webp",
+        "https://p.actionsack.com/fine/happy.webp",
+        "https://p.actionsack.com/fine/lego.webp",
+        "https://p.actionsack.com/fine/not_fine.webp",
+        "https://p.actionsack.com/fine/not_fine_full.webp",
+        "https://p.actionsack.com/fine/reverse.webp",
+        "https://p.actionsack.com/fine/ricky.mp4"
+    ]
+    bot.say(random.choice(this_is_fine))
