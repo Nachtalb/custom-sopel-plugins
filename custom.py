@@ -1869,7 +1869,7 @@ def centaur(bot, trigger):
     bot.say("https://p.actionsack.com/misc/centaur.png")
 
 
-@plugin.search("(!dance|dance!)")
+@plugin.search("(?<!rid)(!dance|dance!)")
 @plugin.command("dance")
 def dance(bot, trigger):
     """Posts a dancing GIF.
