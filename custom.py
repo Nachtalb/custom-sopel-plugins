@@ -2840,6 +2840,7 @@ def JTL(bot, trigger):
         "JTL is addicted to {} 😱".format("\u200B".join("xnaas")),
         "God cries because JTL touches himself at night.",
         "JTL's quote addition is insane. Almost feel bad for the dude.",
+        "https://p.actionsack.com/JTL/bushes.webp",
         "https://p.actionsack.com/JTL/sendit.webp"
     ]
     bot.say(random.choice(JTL))
