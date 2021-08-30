@@ -1964,7 +1964,7 @@ def kay(bot, trigger):
         "https://p.actionsack.com/k/shirt.mp4",
         "https://p.actionsack.com/k/snow.mp4",
         "https://p.actionsack.com/k/VHS.mp4",
-        "https://p.actionsack.com/k/vldlk.gif",
+        "https://p.actionsack.com/k/vldlk.webp",
         "https://p.actionsack.com/k/watch.webp"
     ]
     bot.say(random.choice(kk))
