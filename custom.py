@@ -3362,3 +3362,8 @@ def thisisfine(bot, trigger):
         "https://p.actionsack.com/fine/ricky.mp4"
     ]
     bot.say(random.choice(this_is_fine))
+
+
+@plugin.search("efnet")
+def efnet(bot, trigger):
+    bot.say("JTL wants to be pinged every time the Extremely Fucked Network is brought up.")
