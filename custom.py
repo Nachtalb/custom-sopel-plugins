@@ -3367,3 +3367,8 @@ def thisisfine(bot, trigger):
 @plugin.search("efnet")
 def efnet(bot, trigger):
     bot.say("EFnet? You mean 'Extremely Fucked Network'?")
+
+
+@plugin.search("Who's that Pok(e|é)mon\?")
+def whosthatpokemon(bot, trigger):
+    bot.say("https://p.actionsack.com/v/whos_that_pokemon.mp4")
