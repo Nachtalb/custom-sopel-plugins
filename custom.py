@@ -1369,11 +1369,11 @@ def deusvult(bot, trigger):
     bot.say("https://p.actionsack.com/v/deusvult.webm")
 
 
-@plugin.search("fake!")
+@plugin.search("fake(!| and gay)")
 @plugin.command("fake")
 def fake(bot, trigger):
     """For when something is super fake.
-    Can also be triggered with 'fake!' anywhere in a message."""
+    Can also be triggered with 'fake!' or 'fake and gay' anywhere in a message."""
     fake = [
         "https://p.actionsack.com/fake/faux.png",
         "https://p.actionsack.com/fake/kazoo.gif"
@@ -3366,4 +3366,4 @@ def thisisfine(bot, trigger):
 
 @plugin.search("efnet")
 def efnet(bot, trigger):
-    bot.say("JTL wants to be pinged every time the Extremely Fucked Network is brought up.")
+    bot.say("EFnet? You mean 'Extremely Fucked Network'?")
