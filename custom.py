@@ -1768,6 +1768,7 @@ def nickcage(bot, trigger):
     """Summons Nicolas Cage into chat.
     Can also be summoned with '!cage' anywhere in a message."""
     nick_cage = [
+        "https://p.actionsack.com/cage/nicolas_mage.webp",
         "https://p.actionsack.com/cage/scream.webp",
         "https://p.actionsack.com/cage/side-to-side.webp",
         "https://p.actionsack.com/cage/wink.webp"
