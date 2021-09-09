@@ -3383,3 +3383,8 @@ def whosthatpokemon(bot, trigger):
 @plugin.search("clayman")
 def fuck_clayman(bot, trigger):
     bot.say("https://p.actionsack.com/rekt/shionXclayman.webp")
+
+
+@plugin.search("but why")
+def but_why(bot, trigger):
+    bot.say("https://p.actionsack.com/misc/butwhy.webp")
