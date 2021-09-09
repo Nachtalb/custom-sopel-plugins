@@ -92,6 +92,7 @@ def rekt(bot, trigger):
         "https://p.actionsack.com/rekt/pubg-redzone.mp4",
         "https://p.actionsack.com/rekt/rekt.png",
         "https://p.actionsack.com/rekt/running.gif",
+        "https://p.actionsack.com/rekt/shionXclayman.webp",
         "https://p.actionsack.com/rekt/skateit.mp4",
         "https://p.actionsack.com/rekt/slammin.gif",
         "https://p.actionsack.com/rekt/smash.mp4",
@@ -331,7 +332,7 @@ def angryeyes(bot, trigger):
     bot.say("https://p.actionsack.com/misc/angryeyes.webp")
 
 
-@plugin.search("alot")
+@plugin.search(r"\balot\b")
 def alot(bot, trigger):
     bot.say("https://p.actionsack.com/alot/")
 
@@ -1130,7 +1131,8 @@ def gfy(bot, trigger):
         "https://p.actionsack.com/fuck/urself/gay.webp",
         "https://p.actionsack.com/fuck/urself/gfy.webp",
         "https://p.actionsack.com/fuck/urself/rugrats.webp",
-        "https://p.actionsack.com/fuck/urself/science.webp"]
+        "https://p.actionsack.com/fuck/urself/science.webp"
+    ]
     bot.say(random.choice(gfy))
 
 
@@ -1329,7 +1331,8 @@ def clickbait(bot, trigger):
         "Fifty Shades of Grey: #36 took my breath away!",
         "These scientists **TRIPLED** a Janitors IQ! The result will break your heart.",
         "How freeing an escaped convict turned this little boy into a MILLIONAIRE!",
-        "What This Man Learned From Having Sex With 365 Guys In One Year"]
+        "What This Man Learned From Having Sex With 365 Guys In One Year"
+    ]
     bot.say(random.choice(clickbait))
 
 
@@ -1800,7 +1803,8 @@ def voiceactor(bot, trigger):
         "Thank you... This is a nice comment... Maybe these stupid insects and take notes and learn what real hospitality is!?",
         "I am sick of attackers and now I fight back... Years and years I was quiet... Not... This... Time... I am so sick of people that are LESS than human! Just be fucking nice and I wont bring out my soulcrusher! Is that too much to ask?! I feel like I am in some stupid episode of PUNKED!",
         "My animation reel is good. You cannot fool me... You cannot weaken my defenses here... I acted those characters all on the fly and made up the scripts on the fly too... I think they are exceptional... Imagine when I actually TRY to make the proper reels... Why must I keep explaining myself to you narrow minded fools?! I can be such a wonderful and charming man... Yet, now you have made me into the dragon!",
-        "https://p.actionsack.com/misc/'voiceactor'.png"]
+        "https://p.actionsack.com/misc/'voiceactor'.png"
+    ]
     bot.say(random.choice(voice_actor), max_messages=3)
 
 
@@ -1985,7 +1989,8 @@ def kiki(bot, trigger):
         "https://p.actionsack.com/kiki/sauce.png",
         "https://p.actionsack.com/kiki/snoop.png",
         formatting.monospace("[4:44 PM] Kiki: U sound so far right now"),
-        "I S M A E L  C H I A  T O R R E S"]
+        "I S M A E L  C H I A  T O R R E S"
+    ]
     bot.say(random.choice(kiki))
 
 
@@ -3373,3 +3378,8 @@ def efnet(bot, trigger):
 @plugin.search(r"Who's that Pok(e|é)mon\?")
 def whosthatpokemon(bot, trigger):
     bot.say("https://p.actionsack.com/v/whos_that_pokemon.mp4")
+
+
+@plugin.search("clayman")
+def fuck_clayman(bot, trigger):
+    bot.say("https://p.actionsack.com/rekt/shionXclayman.webp")
