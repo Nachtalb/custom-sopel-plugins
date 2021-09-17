@@ -26,6 +26,10 @@ Custom commands for [Action Sack](https://actionsack.com)'s Sopel bot. Many of t
 Uses the [icanhazdadjoke API](https://icanhazdadjoke.com/api) to post dad jokes.
 
 
+## [drg.py](https://github.com/xnaas/custom-sopel-plugins/blob/master/drg.py)
+Some custom stuff for [Deep Rock Galactic](https://www.deeprockgalactic.com/).
+
+
 ## [gambling.py](https://github.com/xnaas/custom-sopel-plugins/blob/master/gambling.py)
 Allows users to make and gamble away virtual currency.
 
