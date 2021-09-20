@@ -61,6 +61,11 @@ def ytdl(bot, trigger):
             ytdl.download([url])
             bot.say("https://actionsack.com/tmp/{}.{}".format(id, ext))
             return
+        if re.search(r"vm\.tiktok\.com\/", url):
+            bot.say(formatting.italic("Downloading..."))
+            ytdl.download([url])
+            bot.say("https://actionsack.com/tmp/{}.{}".format(id, ext))
+            return
         else:
             bot.reply(
                 "This video has no duration (livestream?) and cannot be downloaded.")
