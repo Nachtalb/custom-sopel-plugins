@@ -1,5 +1,4 @@
 # Deep Rock Galactic
-# from sopel import plugin, formatting
 from sopel import plugin
 import random
 
@@ -51,8 +50,8 @@ def drg_toast(bot, trigger):
             "For Karl!",
             "Fortune and glory!",
             "Hell Darkness my old friend!",
-            "Karl would approve of this.", # . or !
-            "Last one to finish is a pointy ear leaf lover!", # capitalization/spelling check needed
+            "Karl would approve of this.",
+            "Last one to finish is a pointy eared leaf lover!",
             "Long live the dwarves!",
             "May your beards be thick, and your goldsatchels heavy!",
             "Miners! The lowest and the highest!",
@@ -62,9 +61,11 @@ def drg_toast(bot, trigger):
             "Skål!",
             "Teamwork and beer will keep us together!",
             "To a successful mission!",
+            "To danger!",
             "To darkness!",
             "To gold!",
             "To Karl!",
+            "To mates, to darkness, and to making it back alive!",
             "To our continue survival! ...Yeah, right, hahahah!",
             "To Rock and Stone!",
             "To teamwork!",
