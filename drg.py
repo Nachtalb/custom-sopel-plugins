@@ -15,7 +15,7 @@ def drg_salute(bot, trigger):
             "For Karl!",
             "For Rock and Stone!",
             "If you don't Rock and Stone, you ain't coming home!",
-            "Leave no dwarf behind!"
+            "Leave no dwarf behind!",
             "Like that! Rock and Stone!",
             "None can stand before us!",
             "Rock and roll!",
@@ -34,9 +34,45 @@ def drg_salute(bot, trigger):
             "We are UNBREAKABLE!",
             "We fight for Rock and Stone!",
             "We rock!",
-            "Yaaaah, Rock and Stone!",
+            "Yaaaah, Rock and Stone!"
         ]
         bot.say(random.choice(drg_salutes))
+
+
+@plugin.command("toast")
+@plugin.search("cheers")
+def drg_toast(bot, trigger):
+    if trigger.sender == "#drg":
+        drg_toasts = [
+            "Bottoms up, friends!",
+            "Cheers!",
+            "Cheers everyone!",
+            "Darkness is our friend!",
+            "For Karl!",
+            "Fortune and glory!",
+            "Hell Darkness my old friend!",
+            "Karl would approve of this.", # . or !
+            "Last one to finish is a pointy ear leaf lover!", # capitalization/spelling check needed
+            "Long live the dwarves!",
+            "May your beards be thick, and your goldsatchels heavy!",
+            "Miners! The lowest and the highest!",
+            "Nothing will stop us now!",
+            "Rock and Stone!",
+            "Rock and Stone, to the bone!",
+            "Skål!",
+            "Teamwork and beer will keep us together!",
+            "To a successful mission!",
+            "To darkness!",
+            "To gold!",
+            "To Karl!",
+            "To our continue survival! ...Yeah, right, hahahah!",
+            "To Rock and Stone!",
+            "To teamwork!",
+            "To the Empires of Old!",
+            "To the fallen!",
+            "To those we lost!"
+        ]
+        bot.say(random.choice(drg_toasts))
 
 
 @plugin.search("karl")
