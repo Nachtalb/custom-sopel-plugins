@@ -778,9 +778,10 @@ def murica(bot, trigger):
     Can also be triggered with 'murica' anywhere in a message."""
     murica = [
         "https://p.actionsack.com/murica/clapping.mp4",
-        "https://p.actionsack.com/murica/kiss.gif",
-        "https://p.actionsack.com/murica/knockknock.gif",
-        "https://p.actionsack.com/murica/freedomaf.mp4"
+        "https://p.actionsack.com/murica/feelsbadman.webp",
+        "https://p.actionsack.com/murica/freedomaf.mp4",
+        "https://p.actionsack.com/murica/kiss.webp",
+        "https://p.actionsack.com/murica/knockknock.webp"
     ]
     bot.say(random.choice(murica))
 
