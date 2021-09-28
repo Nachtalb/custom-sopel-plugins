@@ -10,18 +10,16 @@ def setup(bot):
     if "youtube_ids" not in bot.memory:
         bot.memory["youtube_ids"] = SopelIdentifierMemory()
 
+
 # YouTube Link Logger
-
-
 def shutdown(bot):
     try:
         del bot.memory["youtube_ids"]
     except KeyError:
         pass
 
+
 # YouTube Link Logger
-
-
 @plugin.echo
 @plugin.priority("low")
 @plugin.require_chanmsg
