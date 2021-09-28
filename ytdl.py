@@ -72,6 +72,7 @@ def ytdl(bot, trigger):
         except KeyError:
             bot.reply(
                 "You've given me nothing to work with...what the Hell do you want?!")
+            return
 
     try:
         with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
