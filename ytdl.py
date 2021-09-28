@@ -42,6 +42,7 @@ def youtube_link_log(bot, trigger):
 
 # Tells us what ID is logged for this channel.
 @plugin.command("ytid")
+@plugin.require_chanmsg
 def temp_youtube_id(bot, trigger):
     try:
         bot.reply("The currently stored ID for this channel is {}.".format(
