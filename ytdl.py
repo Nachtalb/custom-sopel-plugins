@@ -48,7 +48,7 @@ def temp_youtube_id(bot, trigger):
         bot.reply("The currently stored ID for this channel is {}.".format(
             bold(bot.memory["youtube_ids"][trigger.sender])))
     except KeyError:
-        bot.reply("I have no IDs stored for this channel.")
+        bot.reply("I have no ID stored for this channel.")
 
 
 # Download MP4-compatible formats for MP4 container
