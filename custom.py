@@ -362,6 +362,7 @@ def deeznutz(bot, trigger):
         "https://p.actionsack.com/nutz/dd.webp",
         "https://p.actionsack.com/nutz/dragon.webp",
         "https://p.actionsack.com/nutz/grandma.webp",
+        "https://p.actionsack.com/nutz/new_world.webp",
         "https://p.actionsack.com/nutz/prez.webp",
         "https://p.actionsack.com/nutz/wood.webp"
     ]
