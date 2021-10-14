@@ -77,6 +77,7 @@ def ytdl(bot, trigger):
 
     try:
         with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
+            bot.say(italic("Processing..."))
             meta = ytdl.extract_info(url, download=False)
             id = meta["id"]
             ext = meta["ext"]
