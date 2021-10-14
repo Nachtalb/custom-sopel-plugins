@@ -3392,6 +3392,7 @@ def but_why(bot, trigger):
     bot.say("https://p.actionsack.com/misc/butwhy.webp")
 
 
-@plugin.commands("log", "chagelog", "commits")
+@plugin.commands("log", "changelog", "commits")
 def sackbot_changelog(bot, trigger):
+    """Get Sackbot's commit log."""
     bot.say("https://github.com/xnaas/custom-sopel-plugins/commits/master")
