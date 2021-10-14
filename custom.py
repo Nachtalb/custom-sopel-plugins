@@ -3390,3 +3390,8 @@ def fuck_clayman(bot, trigger):
 @plugin.search("but why")
 def but_why(bot, trigger):
     bot.say("https://p.actionsack.com/misc/butwhy.webp")
+
+
+@plugin.commands("log", "chagelog", "commits")
+def sackbot_changelog(bot, trigger):
+    bot.say("https://github.com/xnaas/custom-sopel-plugins/commits/master")
