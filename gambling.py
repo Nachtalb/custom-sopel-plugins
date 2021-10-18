@@ -232,6 +232,22 @@ def claim_money(bot, trigger):
         bot.reply("This command can only be used in #casino")
 
 
+@plugin.require_admin
+@plugin.command("timelyreset")
+def timely_reset(bot, trigger):
+    """Reset a user's timely timer for whatever reason."""
+    target = trigger.group(3)
+
+    if not target:
+        bot.reply("I need someone's timely timer to reset.")
+        return
+
+    target = tools.Identifier(target)
+
+    bot.db.delete_nick_value(target, "currency_timely")
+    bot.say("{}'s timely timer has been reset.".format(target))
+
+
 @plugin.command("betflip", "bf")
 @plugin.example(".bf 10 h")
 def gamble_betflip(bot, trigger):
