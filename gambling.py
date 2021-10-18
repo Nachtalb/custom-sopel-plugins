@@ -1,4 +1,5 @@
-from sopel import plugin, tools, formatting
+from sopel import plugin, tools
+from sopel.formatting import italic
 from datetime import datetime, timedelta
 import random
 import time
@@ -321,6 +322,85 @@ def gamble_betflip(bot, trigger):
         bot.reply("This command can only be used in #casino")
 
 
+@plugin.command("br", "betroll")
+@plugin.example(".br 200")
+def gamble_betroll(bot, trigger):
+    """Bet your money on a random roll from 0-100. Roll payouts:
+    0-66: 0x // 67-90: 2x // 91-99: 4x // 100: 10x"""
+    if trigger.sender == "#casino":
+        gambler = trigger.nick
+        # Check that user has actually gambled some amount of money.
+        try:
+            bet = int(trigger.group(3).replace(",", "").replace("$", ""))
+        except AttributeError:
+            bot.reply("I need an amount of money to bet.")
+            return plugin.NOLIMIT
+        except TypeError:
+            bot.reply("I need an amount of money to bet.")
+            return plugin.NOLIMIT
+        except ValueError:
+            bot.reply("That's not a number...")
+            return plugin.NOLIMIT
+
+        # Check if user has enough money to make the gamble...
+        bet_check = bot.db.get_nick_value(gambler, "currency_amount")
+        if bet_check is None:
+            bot.reply(
+                "You can't gamble yet! Please run the `.iwantmoney` command.")
+            return plugin.NOLIMIT
+        if bet > bet_check:
+            bot.reply(
+                "You don't have enough money to make this bet. Try a smaller bet.")
+            return plugin.NOLIMIT
+        if bet <= 0:
+            bot.reply("You can't bet nothing!")
+            return plugin.NOLIMIT
+
+        # Take the user's money before continuing
+        spend_on_bet = bet_check - bet
+        bot.db.set_nick_value(gambler, "currency_amount", spend_on_bet)
+
+        # Roll a number 0-100
+        roll = random.randint(0, 100)
+        # Determine multiplier
+        if 0 <= roll <= 66:
+            multiplier = 0
+        elif 67 <= roll <= 90:
+            multiplier = 2
+        elif 91 <= roll <= 99:
+            multiplier = 4
+        elif roll == 100:
+            multiplier = 10
+
+        # Process winnings
+        winnings = bet * multiplier
+        new_balance = spend_on_bet + winnings
+        bot.db.set_nick_value(gambler, "currency_amount", new_balance)
+
+        # Stress user with delay and output result
+        bot.say(italic("Rolling a number..."))
+        time.sleep(1.5)
+
+        # Conditionals
+        if multiplier == 0:
+            bot.reply(
+                "You rolled {}. You lost. {}x multiplier. New balance: ${:,}.".format(
+                    roll, multiplier, new_balance))
+            return
+        elif multiplier in (2, 4):
+            bot.reply(
+                "You rolled {}. You win! {}x multiplier. New balance: ${:,}.".format(
+                    roll, multiplier, new_balance))
+            return
+        elif multiplier == 10:
+            bot.reply(
+                "🎊 Holy shit! You rolled a {} which means {}x multiplier! New balance: ${:,}. 🎊".format(
+                    roll, multiplier, new_balance))
+            return
+    else:
+        bot.reply("This command can only be used in #casino")
+
+
 @plugin.command("wheeloffortune", "wheel")
 @plugin.example(".wheel 100")
 def gamble_wheel(bot, trigger):
@@ -383,7 +463,7 @@ def gamble_wheel(bot, trigger):
             "spins the wheel...{0}{0}{0}".format(
                 random.choice(wheel_direction)))
         time.sleep(4)
-        bot.say(formatting.italic("The wheel slows to a stop..."))
+        bot.say(italic("The wheel slows to a stop..."))
         time.sleep(2)
 
         # Conditionals
