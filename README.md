@@ -54,6 +54,10 @@ Queries the [whenisthenextmcufilm API](https://whenisthenextmcufilm.com) for upc
 RNG of NSFW things.
 
 
+## [penis.py](https://github.com/xnaas/custom-sopel-plugins/blob/master/penis.py)
+100% accurate penis measuring.
+
+
 ## [random-apis.py](https://github.com/xnaas/custom-sopel-plugins/blob/master/random-apis.py)
 Adds some random APIs for fun.
 
