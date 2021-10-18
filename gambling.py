@@ -29,7 +29,7 @@ def award_money(bot, trigger):
 
         # Check for valid target to award money to.
         winner = tools.Identifier(winner)
-        if winner not in bot.channels[trigger.sender].privileges:
+        if winner not in bot.channels[trigger.sender].users:
             bot.reply("Please provide a valid user.")
             return
 
@@ -66,7 +66,7 @@ def take_money(bot, trigger):
 
         # Check for valid target to take money from.
         loser = tools.Identifier(loser)
-        if loser not in bot.channels[trigger.sender].privileges:
+        if loser not in bot.channels[trigger.sender].users:
             bot.reply("Please provide a valid user.")
             return
 
@@ -117,7 +117,7 @@ def give_money(bot, trigger):
 
         # Check for valid target to give money to.
         target = tools.Identifier(target)
-        if target not in bot.channels[trigger.sender].privileges:
+        if target not in bot.channels[trigger.sender].users:
             bot.reply("Please provide a valid user.")
             return
 
