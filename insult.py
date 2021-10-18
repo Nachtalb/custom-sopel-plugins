@@ -20,7 +20,7 @@ def insult(bot, trigger):
         bot.reply("Nice try, retard.")
         return
 
-    if target not in bot.channels[trigger.sender].privileges:
+    if target not in bot.channels[trigger.sender].users:
         bot.reply("I need someone to insult, dipshit.")
         return
 

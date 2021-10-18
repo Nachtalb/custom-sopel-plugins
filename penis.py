@@ -19,7 +19,7 @@ def literal_dick_measuring(bot, trigger):
     state = random.getstate()
 
     # Check user is in channel
-    if target not in bot.channels[trigger.sender].privileges:
+    if target not in bot.channels[trigger.sender].users:
         bot.reply("I need someone in chat to measure. ( ͡° ͜ʖ ͡°)")
         return
 
