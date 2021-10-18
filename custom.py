@@ -570,7 +570,7 @@ def triggered(bot, trigger):
     bot.say(random.choice(triggered))
 
 
-@plugin.search("to be fair")
+@plugin.search("to be fair(?!ly)")
 def tobefair(bot, trigger):
     bot.say("https://p.actionsack.com/v/tobefair.webm")
 
