@@ -2433,7 +2433,7 @@ def heff(bot, trigger):
     bot.say("https://p.actionsack.com/v/heff.webm")
 
 
-@plugin.search("!salty")
+@plugin.search("!salty", "🧂")
 @plugin.command("salty")
 def salty(bot, trigger):
     """Can also be triggered with '!salty' anywhere in a message."""
