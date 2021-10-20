@@ -3394,7 +3394,7 @@ def but_why(bot, trigger):
     bot.say("https://p.actionsack.com/misc/butwhy.webp")
 
 
-# Sakcbot GitHub Stuff
+# Sackbot GitHub Stuff
 @plugin.commands("log", "changelog", "commits")
 @plugin.rate(user=43200)
 def sackbot_changelog(bot, trigger):
@@ -3407,4 +3407,9 @@ def sackbot_changelog(bot, trigger):
 def sackbot_latest(bot, trigger):
     """Post latest commit link for Sackbot."""
     bot.say("https://github.com/xnaas/custom-sopel-plugins/commit/master")
-# Sakcbot GitHub Stuff
+# Sackbot GitHub Stuff
+
+
+@plugin.rule("^F$")
+def pay_respects(bot, trigger):
+    bot.action("pays respects")
