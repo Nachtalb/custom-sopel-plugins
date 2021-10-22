@@ -186,9 +186,9 @@ def init_money(bot, trigger):
         target = trigger.nick
         check_for_money = bot.db.get_nick_value(target, "currency_amount")
         if check_for_money is None:
-            bot.db.set_nick_value(target, "currency_amount", 250)
+            bot.db.set_nick_value(target, "currency_amount", 100)
             bot.say(
-                "Congratulations! Here's $250 to get you started, {}.".format(target))
+                "Congratulations! Here's $100 to get you started, {}.".format(target))
     else:
         bot.reply("This command can only be used in #casino")
 
@@ -196,7 +196,7 @@ def init_money(bot, trigger):
 @plugin.require_chanmsg  # Forcing public claiming serves as a reminder to all.
 @plugin.command("timely")
 def claim_money(bot, trigger):
-    """Claim $150 every 24 hours. ($250 for first claim!)"""
+    """Claim $10 every hour. ($100 for first claim!)"""
     if trigger.sender == "#casino":
         claimer = trigger.nick
 
@@ -210,23 +210,23 @@ def claim_money(bot, trigger):
         check_for_timely = bot.db.get_nick_value(claimer, "currency_timely")
         if check_for_timely is None:
             bot.db.set_nick_value(claimer, "currency_timely", now)
-            claim = check_for_money + 250
+            claim = check_for_money + 100
             bot.db.set_nick_value(claimer, "currency_amount", claim)
             bot.reply(
-                "New balance: ${:,}. Don't forget to claim again in 24 hours!".format(claim))
+                "New balance: ${:,}. Don't forget to claim again in an hour! ($10/hr going forward.)".format(claim))
             return
 
-        check_24_hours = now - check_for_timely
-        if check_24_hours >= 86400:
+        check_1_hour = now - check_for_timely
+        if check_1_hour >= 3600:
             bot.db.set_nick_value(claimer, "currency_timely", now)
-            claim = check_for_money + 150
+            claim = check_for_money + 10
             bot.db.set_nick_value(claimer, "currency_amount", claim)
             bot.reply(
-                "New balance: ${:,}. Don't forget to claim again in 24 hours!".format(claim))
+                "New balance: ${:,}. Don't forget to claim again in an hour!".format(claim))
             return
         else:
-            to_24_hours = 86400 - check_24_hours
-            time_remaining = str(timedelta(seconds=round(to_24_hours)))
+            to_1_hour = 3600 - check_1_hour
+            time_remaining = str(timedelta(seconds=round(to_1_hour)))
             bot.reply(
                 "{} until you can claim again, greedy!".format(time_remaining))
     else:
