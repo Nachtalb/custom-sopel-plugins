@@ -401,6 +401,85 @@ def gamble_betroll(bot, trigger):
         bot.reply("This command can only be used in #casino")
 
 
+@plugin.command("oe")
+@plugin.example(".oe 10 e")
+def gamble_oddsevens(bot, trigger):
+    """Wager X amount of money on (o)dds or (e)vens. Winning will net you double your bet."""
+    if trigger.sender == "#casino":
+        gambler = trigger.nick
+        # Check that user has actually gambled some amount of money.
+        try:
+            bet = int(trigger.group(3).replace(",", "").replace("$", ""))
+        except AttributeError:
+            bot.reply("I need an amount of money to bet and (o)dds or (e)vens.")
+            return plugin.NOLIMIT
+        except TypeError:
+            bot.reply("I need an amount of money to bet.")
+            return plugin.NOLIMIT
+        except ValueError:
+            bot.reply("That's not a number...")
+            return plugin.NOLIMIT
+
+        # Check if user has enough money to make the gamble...
+        bet_check = bot.db.get_nick_value(gambler, "currency_amount")
+        if bet_check is None:
+            bot.reply(
+                "You can't gamble yet! Please run the `.iwantmoney` command.")
+            return plugin.NOLIMIT
+        if bet > bet_check:
+            bot.reply(
+                "You don't have enough money to make this bet. Try a smaller bet.")
+            return plugin.NOLIMIT
+        if bet <= 0:
+            bot.reply("You can't bet nothing!")
+            return plugin.NOLIMIT
+
+        # Check if user has actually bet (o)dds or (e)vens.
+        user_choice = trigger.group(4)
+        if user_choice in ["o", "e", "odd", "even", "odds", "evens"]:
+
+            if user_choice == "odd":
+                pass
+            elif user_choice == "o" or user_choice == "odds":
+                user_choice = "odd"
+            elif user_choice == "even":
+                pass
+            elif user_choice == "e" or user_choice == "evens":
+                user_choice = "even"
+
+            # Roll the number, check if even or odd
+            roll_num = random.randint(0, 100)
+            if (roll_num % 2) == 0:
+                roll = "even"
+            else:
+                roll = "odd"
+
+            # Calculate winning and such
+            if roll == user_choice:
+                winnings = bet * 2
+                new_balance = bet_check + bet
+                bot.db.set_nick_value(gambler, "currency_amount", new_balance)
+                bot.action("rolls a number...")
+                time.sleep(1.5)
+                bot.reply(
+                    "I rolled {}. That's {}. You bet on {}. You won ${:,}! Your new balance is ${:,}.".format(
+                        roll_num, roll, user_choice, winnings, new_balance))
+                return
+            else:
+                new_balance = bet_check - bet
+                bot.db.set_nick_value(gambler, "currency_amount", new_balance)
+                bot.action("rolls a number...")
+                time.sleep(1.5)
+                bot.reply(
+                    "I rolled {}. That's {}. You bet on {}. You lost ${:,}. Your new balance is ${:,}.".format(
+                        roll_num, roll, user_choice, bet, new_balance))
+                return
+        else:
+            bot.reply("I need you to bet on (o)dds or (e)vens.")
+    else:
+        bot.reply("This command can only be used in #casino")
+
+
 @plugin.command("wheeloffortune", "wheel")
 @plugin.example(".wheel 100")
 def gamble_wheel(bot, trigger):
