@@ -610,7 +610,7 @@ def gamble_leadboard(bot, trigger):
                 pass
             else:
                 bot.say(
-                    "Rank {} is {} with ${:,}.".format(
+                    "{}. {}: ${:,}.".format(
                         rank, "\u200B".join(
                             person[0]), int(
                             person[2])))
