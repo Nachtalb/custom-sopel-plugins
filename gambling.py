@@ -2,7 +2,9 @@ from sopel import plugin, tools
 from sopel.formatting import italic
 from datetime import datetime, timedelta
 import random
+import sqlite3
 import time
+import unicodedata
 
 
 @plugin.require_admin
@@ -563,5 +565,58 @@ def gamble_wheel(bot, trigger):
                     multiplier,
                     winnings,
                     new_balance))
+    else:
+        bot.reply("This command can only be used in #casino")
+
+
+@plugin.command("lb")
+@plugin.rate(user=5)
+@plugin.require_chanmsg
+def gamble_leadboard(bot, trigger):
+    """Posts the top 5 richest gamblers."""
+    if trigger.sender == "#casino":
+        try:
+            # Connect to DB
+            con = sqlite3.connect("/home/xnaas/sackbot2/sopel/default.db")
+
+            # Create whatever the fuck a cursor is
+            cur = con.cursor()
+
+            # SQL Query
+            cur.execute("SELECT canonical, key, value FROM nick_values a join nicknames b on a.nick_id = b.nick_id WHERE key='currency_amount' ORDER BY cast(value as int) DESC;")
+
+            # Store results
+            lb_base = cur.fetchall()
+
+            # Close db connection
+            con.close()
+        except sqlite3.OperationalError:
+            bot.reply(
+                "Error querying database...most likely no one has gambled yet. Try `.iwantmoney` to get started.")
+            return
+
+        # Print results
+        for index, person in enumerate(lb_base):
+            # Rank/Index required to actually go through data
+            rank = index + 1
+
+            # If rank 1 has $0, then no one has anything
+            if rank == 1 and int(person[2]) == 0:
+                bot.say("Ain't nobody got shit!")
+                return
+
+            # If a user has $0, they don't belong on the leaderboard
+            if int(person[2]) == 0:
+                pass
+            else:
+                bot.say(
+                    "Rank {} is {} with ${:,}.".format(
+                        rank, "\u200B".join(
+                            person[0]), int(
+                            person[2])))
+
+            # We only want to print up to 5 people
+            if rank == 5:
+                break
     else:
         bot.reply("This command can only be used in #casino")
