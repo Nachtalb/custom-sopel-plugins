@@ -84,11 +84,11 @@ def ytdl(bot, trigger):
             dur = meta["duration"]
             if not dur:
                 bot.reply(
-                    "This video has no duration (livestream?) and cannot be downloaded.")
+                    "This video has no duration (livestream?) and won't be downloaded.")
                 return
             if dur > 600:
                 bot.reply(
-                    "This video is longer than 10 minutes and cannot be download, sorry!")
+                    "This video is longer than 10 minutes and won't be downloaded.")
                 return
             else:
                 bot.say(italic("Downloading..."))
