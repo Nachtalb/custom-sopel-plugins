@@ -26,7 +26,7 @@ SCHEME_ERRORS = {
 @plugin.commands('rainbow', 'usa', 'commie', 'spooky')
 def rainbow_cmd(bot, trigger):
     """Make text colored. Options are "rainbow", "usa", "commie", and "spooky"."""
-    text = formatting.plain(trigger.group(2))
+    text = formatting.plain(trigger.group(2) or '')
     scheme = trigger.group(1).lower()
 
     if not text:
