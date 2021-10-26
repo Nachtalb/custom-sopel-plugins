@@ -1551,7 +1551,7 @@ def judge(bot, trigger):
         "not guilty! https://p.actionsack.com/misc/not-guilty.png",
         "guilty! https://p.actionsack.com/misc/guilty.png"
     ]
-    text = formatting.plain(trigger.group(2))
+    text = formatting.plain(trigger.group(2) or '')
 
     if not text:
         try:
