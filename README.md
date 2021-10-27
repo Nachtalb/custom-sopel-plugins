@@ -66,6 +66,10 @@ Adds some random APIs for fun.
 Adds [Smite's VGS](https://smite.gamepedia.com/Voice_Guided_System) to Sopel.
 
 
+## [soplex.py](https://github.com/xnaas/custom-sopel-plugins/blob/master/soplex.py)
+Uses [PlexAPI](https://github.com/pkkid/python-plexapi) to interface your Sopel bot with your Plex server.
+
+
 ## [yourmom.py](https://github.com/xnaas/custom-sopel-plugins/blob/master/yourmom.py)
 Posts a random joke from [yourmom.txt](https://github.com/xnaas/custom-sopel-plugins/blob/master/yourmom.txt).
 
