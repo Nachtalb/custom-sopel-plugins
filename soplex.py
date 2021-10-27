@@ -74,18 +74,26 @@ def plex_search(bot, trigger):
 
     plex = plex_test(bot, trigger)
 
-    if plex == None:
+    if plex is None:
         return
 
     search_results = []
 
     # Search and add Movies to search_results
     for video in plex.search(search, mediatype="movie", limit=3):
-        search_results.append("[{}] {} ({})".format(video.TYPE.title(), video.title, video.year))
-    # Search and add TV Shows to search_results
+        search_results.append(
+            "[{}] {} ({})".format(
+                video.TYPE.title(),
+                video.title,
+                video.year))
 
+    # Search and add TV Shows to search_results
     for video in plex.search(search, mediatype="show", limit=3):
-        search_results.append("[{}] {} ({})".format(video.TYPE.title(), video.title, video.year))
+        search_results.append(
+            "[{}] {} ({})".format(
+                video.TYPE.title(),
+                video.title,
+                video.year))
 
     # verify there's results
     if not search_results:
