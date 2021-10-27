@@ -39,17 +39,21 @@ def plex_test(bot, trigger):
 def plex_test_cmd(bot, trigger):
     """Test if your configured options can reach Plex."""
     plex = plex_test(bot, trigger)
-    try:
-        test = plex.platform
-        bot.reply("Plex connection test successful.")
-    except AttributeError:
+
+    if plex is None:
         return
+    else:
+        bot.reply("Plex connection test successful.")
 
 
 @plugin.command("prm")
 def plex_recentmovies(bot, trigger):
     """List the 3 most recently added movies."""
     plex = plex_test(bot, trigger)
+
+    if plex is None:
+        return
+
     movies = plex.library.section("Movies")
     recent = movies.recentlyAdded(maxresults=3)
     recent_movies = []
