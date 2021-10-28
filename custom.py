@@ -211,11 +211,11 @@ def cryriver(bot, trigger):
     bot.say("https://p.actionsack.com/QQ/QQ007.webp")
 
 
-@plugin.search("!(xms|bge)")
-@plugin.commands("xms", "bge")
-def xms(bot, trigger):
-    """Can also be triggered with '!xms' or '!bge' anywhere in a message."""
-    bot.say("w2g.tv/rooms/actionsack-csurhbl9dkwvwnk91a")
+@plugin.search("!bge")
+@plugin.commands("bge")
+def bge(bot, trigger):
+    """Can also be triggered with '!bge' anywhere in a message."""
+    bot.say("https://ott.actionsack.com/room/ASAK")
 
 
 @plugin.search("📖")
