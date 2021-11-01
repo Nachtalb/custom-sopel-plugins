@@ -36,9 +36,6 @@ def youtube_link_log(bot, trigger):
     # Logs latest YouTube link per channel
     bot.memory["youtube_ids"][trigger.sender] = video_id
 
-    # Debugging in Prod
-    # bot.say("Message logged. ID logged: {}".format(bold(video_id)))
-
 
 # Tells us what ID is logged for this channel.
 @plugin.command("ytid")
@@ -54,6 +51,7 @@ def temp_youtube_id(bot, trigger):
 # Download MP4-compatible formats for MP4 container
 ytdl_opts = {
     "format": "bestvideo[height<=?1080]+bestaudio/best",
+    "format_sort": ["+codec:avc:m4a"], # prioritize h264 and m4a
     "merge_output_format": "mp4",
     "noplaylist": True,
     "forcejson": True,
@@ -120,5 +118,5 @@ def ytdl(bot, trigger):
             return
         else:
             bot.reply(
-                "This video has no duration (livestream?) and cannot be downloaded.")
+                "This video has no duration (livestream?) and won't be downloaded.")
             return
