@@ -1,6 +1,7 @@
 """
 Source: https://github.com/xnaas/sopel-color-text
 Forked and heavily modified from: https://github.com/sopel-irc/sopel-rainbow
+License: Eiffel Forum License, version 2
 """
 from sopel import plugin, formatting
 from sopel.config import types
