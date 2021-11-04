@@ -9,16 +9,16 @@ import unicodedata
 
 
 # Various Gambling Checks
-def gambling_checks(bot, trigger):
-    # Set keys to None for checks
-    data = {"bet": None, "msg": None, "target": None}
+def gambling_checks(bot, trigger, bet_check_on=None):
+    # in_store will be the bank account of the evaluated target or the user defined in bet_check_on
+    bet = msg = target = in_store = None
 
     # Channel Checker – perhaps make this configurable in the future
     if trigger.sender == "#casino":
         pass
     else:
-        data["msg"] = "This command can only be used in #casino"
-        return data
+        msg = "This command can only be used in #casino"
+        return bet, msg, target, in_store
 
     # Target Check
     # NOTE: This is not near as "universal" as originally thought out...
@@ -29,40 +29,62 @@ def gambling_checks(bot, trigger):
     #     issues to deal with.
     target = plain(trigger.group(4) or trigger.nick)
     if not target:
-        data["msg"] = "If you're seeing this message...everything is horribly broken."
-        return data
+        msg = "If you're seeing this message...everything is horribly broken."
+        return bet, msg, target, in_store
     if target == bot.nick:
-        data["msg"] = "I just run the place; I don't participate."
-        return data
-    data["target"] = tools.Identifier(target)
+        msg = "I just run the place; I don't participate."
+        return bet, msg, target, in_store
+    target = tools.Identifier(target)
+    if not bet_check_on:
+        in_store = bot.db.get_nick_value(target, "currency_amount", 0)
 
     # "Bet" Parsing and Checking
     # We're calling everything a "bet" for simplicity.
     # Many commands below don't involve betting.
-    try:
-        bet = plain(re.sub("[,'$€]", '', trigger.group(3).lower()))
-        if bet.isdigit():
-            data["bet"] = int(bet)
-    except AttributeError:
-        bet = None
-    if not bet:
-        data["msg"] = "I need an amount of money."
-        return data
-    else:
+    bet = plain(re.sub("[,'$€]", '', trigger.group(3).lower()))
+    final_bet = None
+    if bet == 'all':
+        if bet_check_on:
+            final_bet = 'all'
+        else:
+            msg = 'You used "all" in a context where it\'s not allowed'
+        return bet, msg, target, in_store
+
+    if not final_bet:
+        try:
+            if bet.isdigit():
+                final_bet = int(bet)
+        except AttributeError:
+            msg = "I need an amount of money."
+            return bet, msg, target, in_store
+
+    if not final_bet:
         try:
             # Checks for bets made with letters
-            # Large thanks to @Nachtalb
+            # xnass: Large thanks to @Nachtalb
+            # Nachtalb: UMU~~
             match = re.match("([\\d.]+)([ckmbt])", bet, re.IGNORECASE)
             # TODO: should be some logic for "all" bet
             calc = {"c": 1e2, "k": 1e3, "m": 1e6, "b": 1e9, "t": 1e12}
-            num, size = match.groups()
-            data["bet"] = int(float(num) * calc[size])
-        except (AttributeError, ValueError):
-            data["msg"] = "I need an amount of money."
-            return data
 
+            num, size = match.groups()
+            final_bet = int(float(num) * calc[size])
+        except (AttributeError, ValueError):
+            msg = "I need an amount of money."
+            return bet, msg, target, in_store
+
+    if bet_check_on:
+        in_store = bot.db.get_nick_value(bet_check_on, "currency_amount")
+        if in_store is None:
+            msg = "You can't gamble yet! Please run the `.iwantmoney` command."
+        elif final_bet == 'all':
+            final_bet = in_store
+        elif bet > in_store:
+            msg = "You don't have enough money to make this bet. Try a smaller bet."
+
+    bet = final_bet
     # return keys: 'msg', 'target', and 'bet'
-    return data
+    return bet, msg, target, in_store
 
 
 @plugin.require_admin
@@ -71,22 +93,18 @@ def gambling_checks(bot, trigger):
 def award_money(bot, trigger):
     """Bot admin uses the power of Admin Abuse to spawn money from nothing."""
     try:
-        data = gambling_checks(bot, trigger)
+        amount, msg, target, in_store = gambling_checks(bot, trigger)
     except Exception as msg:
         return bot.reply(msg)
 
-    amount = data["bet"]
-    msg = data["msg"]
-    target = data["target"]
-
-    if not amount:
+    if msg:
         return bot.reply(msg)
 
     # Check for valid target to award money to.
     if target not in bot.channels[trigger.sender].users:
         return bot.reply("Please provide a valid user.")
 
-    new_balance = bot.db.get_nick_value(target, "currency_amount", 0) + amount
+    new_balance = in_store + amount
     bot.db.set_nick_value(target, "currency_amount", new_balance)
     balance = "${:,}".format(new_balance)
     bot.say("{} now has {}".format(target, bold(balance)))
@@ -98,22 +116,18 @@ def award_money(bot, trigger):
 def take_money(bot, trigger):
     """Bot admin takes (deletes) X amount of money from a user."""
     try:
-        data = gambling_checks(bot, trigger)
+        amount, msg, target, in_store = gambling_checks(bot, trigger)
     except Exception as msg:
         return bot.reply(msg)
 
-    amount = data["bet"]
-    msg = data["msg"]
-    target = data["target"]
-
-    if not amount:
+    if msg:
         return bot.reply(msg)
 
     # Check for valid target to take money from.
     if target not in bot.channels[trigger.sender].users:
         return bot.reply("Please provide a valid user.")
 
-    new_balance = bot.db.get_nick_value(target, "currency_amount", 0) - amount
+    new_balance = in_store - amount
     bot.db.set_nick_value(target, "currency_amount", new_balance)
     balance = "${:,}".format(new_balance)
     bot.say("{} now has {}".format(target, bold(balance)))
@@ -123,46 +137,31 @@ def take_money(bot, trigger):
 @plugin.command("give")
 def give_money(bot, trigger):
     """Give X amount of your money to another user."""
+    giver = trigger.nick
     try:
-        data = gambling_checks(bot, trigger)
+        amount, msg, target, giver_balance = gambling_checks(bot, trigger, bet_check_on=giver)
     except Exception as msg:
         return bot.reply(msg)
 
-    amount = data["bet"]
-    msg = data["msg"]
-    target = data["target"]
-    giver = trigger.nick
-
-    if not amount:
+    if msg:
         return bot.reply(msg)
 
     if giver == target:
         return bot.reply("You gifted yourself the same amount, I guess?")
 
     # Check if the transaction can even occur
-    give_check = bot.db.get_nick_value(giver, "currency_amount")
-    receive_check = bot.db.get_nick_value(target, "currency_amount")
+    receiver_balance = bot.db.get_nick_value(target, "currency_amount")
 
-    if give_check is None:
-        return bot.reply(
-            "You can't do that yet. Please run `.iwantmoney` first.")
-
-    if receive_check is None:
+    if receiver_balance is None:
         return bot.reply(
             "{0} hasn't participated yet. {0} needs to run `.iwantmoney` first.".format(target))
-
-    if amount > give_check:
-        return bot.reply(
-            "You don't have enough money to complete this transcation, you filthy poor.")
 
     # Check for valid target to give money to.
     if target not in bot.channels[trigger.sender].users:
         return bot.reply("Please provide a valid user.")
 
-    giver_new_balance = bot.db.get_nick_value(
-        giver, "currency_amount", 0) - amount
-    target_new_balance = bot.db.get_nick_value(
-        target, "currency_amount", 0) + amount
+    giver_new_balance = giver_balance - amount
+    target_new_balance = receiver_balance + amount
     # Take away the money from the giver.
     bot.db.set_nick_value(giver, "currency_amount", giver_new_balance)
     # Give the money to the target/reciever.
@@ -318,26 +317,14 @@ def timely_reset(bot, trigger):
 @plugin.example(".bf 10 h")
 def gamble_betflip(bot, trigger):
     """Wager X amount of money on (h)eads or (t)ails. Winning will net you double your bet."""
+    gambler = trigger.nick
     try:
-        data = gambling_checks(bot, trigger)
+        bet, msg, _, in_store = gambling_checks(bot, trigger, bet_check_on=gambler)
     except Exception as msg:
         return bot.reply(msg)
 
-    bet = data["bet"]
-    msg = data["msg"]
-    gambler = trigger.nick
-
-    if not bet:
+    if msg:
         return bot.reply(msg)
-
-    # Check if user has enough money to make the gamble...
-    bet_check = bot.db.get_nick_value(gambler, "currency_amount")
-    if bet_check is None:
-        return bot.reply(
-            "You can't gamble yet! Please run the `.iwantmoney` command.")
-    if bet > bet_check:
-        return bot.reply(
-            "You don't have enough money to make this bet. Try a smaller bet.")
 
     # Check if user has actually bet (H)eads or (T)ails.
     user_choice = plain(trigger.group(4) or '')
@@ -349,7 +336,7 @@ def gamble_betflip(bot, trigger):
         return bot.reply("You need to bet on (h)eads or (t)ails.")
 
     # Take the user's money before continuing
-    spend_on_bet = bet_check - bet
+    spend_on_bet = in_store - bet
     bot.db.set_nick_value(gambler, "currency_amount", spend_on_bet)
 
     # Set heads or tails
@@ -385,29 +372,17 @@ def gamble_betflip(bot, trigger):
 def gamble_betroll(bot, trigger):
     """Bet your money on a random roll from 0-100. Roll payouts:
     0-66: 0x // 67-90: 2x // 91-99: 4x // 100: 10x"""
+    gambler = trigger.nick
     try:
-        data = gambling_checks(bot, trigger)
+        bet, msg, _, in_store = gambling_checks(bot, trigger, bet_check_on=gambler)
     except Exception as msg:
         return bot.reply(msg)
 
-    bet = data["bet"]
-    msg = data["msg"]
-    gambler = trigger.nick
-
-    if not bet:
+    if msg:
         return bot.reply(msg)
 
-    # Check if user has enough money to make the gamble...
-    bet_check = bot.db.get_nick_value(gambler, "currency_amount")
-    if bet_check is None:
-        return bot.reply(
-            "You can't gamble yet! Please run the `.iwantmoney` command.")
-    if bet > bet_check:
-        return bot.reply(
-            "You don't have enough money to make this bet. Try a smaller bet.")
-
     # Take the user's money before continuing
-    spend_on_bet = bet_check - bet
+    spend_on_bet = in_store - bet
     bot.db.set_nick_value(gambler, "currency_amount", spend_on_bet)
 
     # Roll a number 0-100
@@ -449,26 +424,14 @@ def gamble_betroll(bot, trigger):
 @plugin.example(".oe 10 e")
 def gamble_oddsevens(bot, trigger):
     """Wager X amount of money on (o)dds or (e)vens. Winning will net you double your bet."""
+    gambler = trigger.nick
     try:
-        data = gambling_checks(bot, trigger)
+        bet, msg, _, in_store = gambling_checks(bot, trigger, bet_check_on=gambler)
     except Exception as msg:
         return bot.reply(msg)
 
-    bet = data["bet"]
-    msg = data["msg"]
-    gambler = trigger.nick
-
-    if not bet:
+    if msg:
         return bot.reply(msg)
-
-    # Check if user has enough money to make the gamble...
-    bet_check = bot.db.get_nick_value(gambler, "currency_amount")
-    if bet_check is None:
-        return bot.reply(
-            "You can't gamble yet! Please run the `.iwantmoney` command.")
-    if bet > bet_check:
-        return bot.reply(
-            "You don't have enough money to make this bet. Try a smaller bet.")
 
     # Check if user has actually bet (o)dds or (e)vens.
     user_choice = plain(trigger.group(4) or '')
@@ -480,7 +443,7 @@ def gamble_oddsevens(bot, trigger):
         return bot.reply("You need to bet on (o)dds or (e)vens.")
 
     # Take the user's money before continuing
-    spend_on_bet = bet_check - bet
+    spend_on_bet = in_store - bet
     bot.db.set_nick_value(gambler, "currency_amount", spend_on_bet)
 
     # Set odds or evens
@@ -524,26 +487,14 @@ def gamble_oddsevens(bot, trigger):
 @plugin.example(".wheel 100")
 def gamble_wheel(bot, trigger):
     """Spin the Wheel of Fortune!"""
+    gambler = trigger.nick
     try:
-        data = gambling_checks(bot, trigger)
+        bet, msg, _, in_store = gambling_checks(bot, trigger, bet_check_on=gambler)
     except Exception as msg:
         return bot.reply(msg)
 
-    bet = data["bet"]
-    msg = data["msg"]
-    gambler = trigger.nick
-
-    if not bet:
+    if msg:
         return bot.reply(msg)
-
-    # Check if user has enough money to make the gamble...
-    bet_check = bot.db.get_nick_value(gambler, "currency_amount")
-    if bet_check is None:
-        return bot.reply(
-            "You can't gamble yet! Please run the `.iwantmoney` command.")
-    if bet > bet_check:
-        return bot.reply(
-            "You don't have enough money to make this bet. Try a smaller bet.")
 
     # Take the user's money before continuing
     spend_on_bet = bet_check - bet
