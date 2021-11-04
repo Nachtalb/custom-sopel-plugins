@@ -52,9 +52,10 @@ def gambling_checks(bot, trigger):
         try:
             # Checks for bets made with letters
             # Large thanks to @Nachtalb
-            match = re.match("([\\d.]+)([kmbt])", bet, re.IGNORECASE)
+            match = re.match("([\\d.]+)([ckmbt])", bet, re.IGNORECASE)
             # TODO: should be some logic for "all" bet
             calc = {
+                "C": 1e2, "c": 1e2,
                 "K": 1e3, "k": 1e3,
                 "M": 1e6, "m": 1e6,
                 "B": 1e9, "b": 1e9,
