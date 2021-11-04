@@ -40,7 +40,7 @@ def gambling_checks(bot, trigger):
     # We're calling everything a "bet" for simplicity.
     # Many commands below don't involve betting.
     try:
-        bet = plain(trigger.group(3).replace(",", "").replace("$", ""))
+        bet = plain(re.sub("[,'$€]", '', trigger.group(3).lower()))
         if bet.isdigit():
             data["bet"] = int(bet)
     except AttributeError:
@@ -54,13 +54,7 @@ def gambling_checks(bot, trigger):
             # Large thanks to @Nachtalb
             match = re.match("([\\d.]+)([ckmbt])", bet, re.IGNORECASE)
             # TODO: should be some logic for "all" bet
-            calc = {
-                "C": 1e2, "c": 1e2,
-                "K": 1e3, "k": 1e3,
-                "M": 1e6, "m": 1e6,
-                "B": 1e9, "b": 1e9,
-                "T": 1e12, "t": 1e12
-            }
+            calc = {"c": 1e2, "k": 1e3, "m": 1e6, "b": 1e9, "t": 1e12}
             num, size = match.groups()
             data["bet"] = int(float(num) * calc[size])
         except (AttributeError, ValueError):
