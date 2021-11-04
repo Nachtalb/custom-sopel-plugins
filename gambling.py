@@ -1,11 +1,10 @@
 from sopel import plugin, tools
 from sopel.formatting import bold, italic, plain
-from datetime import datetime, timedelta
+from datetime import timedelta
 import random
 import re
 import sqlite3
 import time
-import unicodedata
 
 
 # Various Gambling Checks
